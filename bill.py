@@ -191,7 +191,7 @@ class Bill_App:
         btn_F.place(x=770,width=540,height=105)
 
         total_btn=Button(btn_F,command=self.total,text="Total",bg="cadetblue",fg="white",pady=15,width=15).grid(row=0,column=0,padx=5,pady=5)
-        Gbill_btn=Button(btn_F,command=self.welcome_bill,text="Generate Bill",bg="cadetblue",fg="white",pady=15,width=15).grid(row=0,column=1,padx=5,pady=5)
+        Gbill_btn=Button(btn_F,command=self.bill_area,text="Generate Bill",bg="cadetblue",fg="white",pady=15,width=15).grid(row=0,column=1,padx=5,pady=5)
         Clear_btn=Button(btn_F,text="Clear",bg="cadetblue",fg="white",pady=15,width=15).grid(row=0,column=2,padx=5,pady=5)
         Exit_btn=Button(btn_F,text="Exit",bg="cadetblue",fg="white",pady=15,width=15).grid(row=0,column=3,padx=5,pady=5)
 
@@ -199,13 +199,22 @@ class Bill_App:
 
 
     def total(self):
+
+            self.sp= self.soap.get()*40
+            self.fc=(self.face_cream.get()*120)
+            self.fw=(self.face_wash.get()*60)
+            self.spr=(self.spray.get()*180)
+            self.ge=(self.gel.get()*140)
+            self.lo=(self.lotion.get()*180)
+
             self.total_cosmetic_price=float(
-                                       (self.soap.get()*40)+
-                                       (self.face_cream.get()*120)+
-                                       (self.face_wash.get()*60)+
-                                       (self.spray.get()*180)+
-                                       (self.gel.get()*140)+
-                                       (self.lotion.get()*180)
+                                        self.sp+
+                                       self.fc+
+                                       self.fw+
+                                       self.spr+
+                                       self.ge+
+                                       self.lo
+                                       
                                        )
 
             self.cosmetic_price.set("Rs. "+str(self.total_cosmetic_price))
@@ -213,27 +222,43 @@ class Bill_App:
             self.cosmetic_tax.set("Rs. "+str(round((self.total_cosmetic_price*0.05),2)))
 
 
+            self.ri=(self.rice.get()*80)
+            self.fo=(self.food_oil.get()*180)
+            self.da=(self.dal.get()*60)
+            self.wh= (self.wheat.get()*240)
+            self.su=(self.sugar.get()*45)
+            self.te=(self.tea.get()*150)
+
 
             self.total_grocery_price=float(
-                                       (self.rice.get()*80)+
-                                       (self.food_oil.get()*180)+
-                                       (self.dal.get()*60)+
-                                       (self.wheat.get()*240)+
-                                       (self.sugar.get()*45)+
-                                       (self.tea.get()*150)
+                                       self.ri+
+                                       self.fo+
+                                       self.da+
+                                      self.wh+
+                                       self.su+
+                                       self.te
+                                       
                                        )
 
             self.grocery_price.set("Rs. " +str(self.total_grocery_price))
             self.grocery_tax.set("Rs. "+str(round((self.total_grocery_price*0.1),2)))
-
+            
+            
+            self.ma=(self.mazza.get()*60)
+            self.co= (self.coke.get()*60)
+            self.fr=(self.frooti.get()*50)
+            self.th=(self.thumbsup.get()*45)
+            self.lm=(self.limca.get()*40)
+            self.spr=(self.sprite.get()*60)
 
             self.total_cold_drink_price=float(
-                                       (self.mazza.get()*60)+
-                                       (self.coke.get()*60)+
-                                       (self.frooti.get()*50)+
-                                       (self.thumbsup.get()*45)+
-                                       (self.limca.get()*40)+
-                                       (self.sprite.get()*60)
+                                       self.ma+
+                                      self.co+
+                                      self.fr +
+                                        self.th+
+                                       self.lm+
+                                       self.sp
+                                       
                                        )
 
             self.cold_drink_price.set("Rs. "+str(self.total_cold_drink_price))
@@ -246,15 +271,17 @@ class Bill_App:
          self.txtarea.insert(END,f"\n CUSTOMER NAME {self.c_name.get()}")
          self.txtarea.insert(END,f"\n PHONE NUMBER {self.c_phon.get()}")
          self.txtarea.insert(END,f"\n*************************************")
-         self.txtarea.insert(END,f"\n PRODUCTS\t\t QTY \t\tPRICE")
+         self.txtarea.insert(END,f"\n PRODUCTS\t\t QTY \t\t PRICE")
          self.txtarea.insert(END,f"\n*************************************")
 
 
 
     def bill_area(self):
-         pass
+        self.welcome_bill()
+        if self.soap.get()!=0:
+            self.txtarea.insert(END,f"\n BATH SOAP \t\t {self.soap.get()}\t\t {self.sp}")
 
-
+            
 
 
 
