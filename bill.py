@@ -1,6 +1,7 @@
 from tkinter import*
 import math,random
-
+from tkinter import messagebox
+import os
 
 class Bill_App:
     def __init__(self,root):
@@ -74,7 +75,7 @@ class Bill_App:
         c_bill_lb1=Label(F1,text="Bill Number",bg=bg_color,fg="black",font=("Baskerville Old Face",15,"bold")).grid(row=0,column=4,padx=20,pady=5)
         c_bill_txt=Entry(F1,width=15,font="Arial 15",textvariable=self.search_bill,bd=7,relief=SUNKEN).grid(row=0,column=5,pady=5,padx=10)
 
-        bill_btn=Button(F1,text="Search",width=10,bd=7,font=("Baskerville Old Face", 10," bold")).grid(row=0,column=6,pady=10,padx=10)
+        bill_btn=Button(F1,text="Search",command=self.find_bill,width=10,bd=7,font=("Baskerville Old Face", 10," bold")).grid(row=0,column=6,pady=10,padx=10)
 
 
         #Cosmetics Frame
@@ -219,7 +220,7 @@ class Bill_App:
                                        )
 
             self.cosmetic_price.set("Rs. "+str(self.total_cosmetic_price))
-
+            self.c_tax=round((self.total_cosmetic_price*0.05),2)
             self.cosmetic_tax.set("Rs. "+str(round((self.total_cosmetic_price*0.05),2)))
 
 
@@ -242,6 +243,7 @@ class Bill_App:
                                        )
 
             self.grocery_price.set("Rs. " +str(self.total_grocery_price))
+            self.g_tax=round((self.total_grocery_price*0.1),2)
             self.grocery_tax.set("Rs. "+str(round((self.total_grocery_price*0.1),2)))
             
             
@@ -263,7 +265,11 @@ class Bill_App:
                                        )
 
             self.cold_drink_price.set("Rs. "+str(self.total_cold_drink_price))
+            self.cd_tax=round((self.total_cold_drink_price*0.05),2)
             self.cold_drink_tax.set("Rs. "+str(round((self.total_cold_drink_price*0.05),2)))
+
+
+            self.Total_bill=float(self.total_cosmetic_price+self.total_grocery_price+self.total_cold_drink_price+self.c_tax+self.g_tax+self.cd_tax)
 
     def welcome_bill(self):
          self.txtarea.delete('1.0',END)
@@ -274,12 +280,19 @@ class Bill_App:
          self.txtarea.insert(END,f"\n*************************************")
          self.txtarea.insert(END,f"\n*************************************")
          self.txtarea.insert(END,f"\n PRODUCTS\t\t QTY \t\t PRICE")
-         self.txtarea.insert(END,f"\n*************************************")
-         self.txtarea.insert(END,f"\n*************************************")
+         
 
 
 
     def bill_area(self):
+      if self.c_name.get()=="" or self.c_phon.get()=="":
+        messagebox.showerror("Error","Customer details are required")
+      
+      elif self.cosmetic_price.get()=="Rs. 0.0" and self.grocery_price.get()=="Rs. 0.0" and self.cold_drink_price.get()=="Rs. 0.0":
+          messagebox.showerror("Error","No Product purchased") 
+
+      else:
+       
         self.welcome_bill()
         if self.soap.get()!=0:
             self.txtarea.insert(END,f"\n BATH SOAP \t\t {self.soap.get()}\t\t {self.sp}")
@@ -298,6 +311,12 @@ class Bill_App:
  
         if self.lotion.get()!=0:
             self.txtarea.insert(END,f"\n BODY LOTION \t\t {self.lotion.get()}\t\t {self.lo}")
+
+
+        
+        if self.cosmetic_tax.get()!="Rs. 0.0":
+             self.txtarea.insert(END,f"\nCosmetics Tax \t\t {self.cosmetic_tax.get()}")
+       
 
 
 
@@ -320,6 +339,10 @@ class Bill_App:
         if self.sprite.get()!=0:
             self.txtarea.insert(END,f"\n SPRITE \t\t {self.sprite.get()}\t\t {self.sprt}")    
             
+        
+        if self.cold_drink_tax.get()!="Rs. 0.0":
+             self.txtarea.insert(END,f"\nCold Drinks Tax \t\t {self.cold_drink_tax.get()}")
+             
 
 
 
@@ -341,6 +364,35 @@ class Bill_App:
  
         if self.tea.get()!=0:
             self.txtarea.insert(END,f"\n TEA \t\t {self.tea.get()}\t\t {self.te}")
+
+
+
+        if self.grocery_tax.get()!="Rs. 0.0":
+             self.txtarea.insert(END,f"\nGroceries Tax \t\t {self.grocery_tax.get()}")
+       
+
+
+
+        self.txtarea.insert(END,F"\n TOTAL BILL: \t\t{self.Total_bill}")
+
+        self.save_bill()
+        
+    def save_bill(self):
+        op=messagebox.askyesno("Save Bill","Do you want to save the bill?")
+        if op>0:
+            self.bill_data=self.txtarea.get()
+            f1=open("bills"+str(self.bill_no.get())+".txt","w")
+            f1.write(self.bill_data)
+            f1.close()
+            messagebox.showinfo("Saved",f"Bill no. : {self.bill_no.get()} Saved Successfully")
+
+        else:
+            return
+ 
+
+    def find_bill(self):
+        for i in os.listdir("bills/"):
+            print(i)
 
 
 root=Tk()
