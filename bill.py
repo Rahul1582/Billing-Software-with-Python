@@ -194,8 +194,8 @@ class Bill_App:
 
         total_btn=Button(btn_F,command=self.total,text="Total",bg="cadetblue",fg="white",pady=15,width=15).grid(row=0,column=0,padx=5,pady=5)
         Gbill_btn=Button(btn_F,command=self.bill_area,text="Generate Bill",bg="cadetblue",fg="white",pady=15,width=15).grid(row=0,column=1,padx=5,pady=5)
-        Clear_btn=Button(btn_F,text="Clear",bg="cadetblue",fg="white",pady=15,width=15).grid(row=0,column=2,padx=5,pady=5)
-        Exit_btn=Button(btn_F,text="Exit",bg="cadetblue",fg="white",pady=15,width=15).grid(row=0,column=3,padx=5,pady=5)
+        Clear_btn=Button(btn_F,command=self.clear_data,text="Clear",bg="cadetblue",fg="white",pady=15,width=15).grid(row=0,column=2,padx=5,pady=5)
+        Exit_btn=Button(btn_F,command=self.Exit,text="Exit",bg="cadetblue",fg="white",pady=15,width=15).grid(row=0,column=3,padx=5,pady=5)
 
         self.welcome_bill()
 
@@ -380,8 +380,8 @@ class Bill_App:
     def save_bill(self):
         op=messagebox.askyesno("Save Bill","Do you want to save the bill?")
         if op>0:
-            self.bill_data=self.txtarea.get()
-            f1=open("bills"+str(self.bill_no.get())+".txt","w")
+            self.bill_data=self.txtarea.get('1.0',END)
+            f1=open("bills/"+str(self.bill_no.get())+".txt","w")
             f1.write(self.bill_data)
             f1.close()
             messagebox.showinfo("Saved",f"Bill no. : {self.bill_no.get()} Saved Successfully")
@@ -392,7 +392,71 @@ class Bill_App:
 
     def find_bill(self):
         for i in os.listdir("bills/"):
-            print(i)
+            if i.split('.')[0]==self.search_bill.get():
+                f1=open(f"bills/{i}","r")
+                self.txtarea.delete('1.0',END)
+                self.txtarea.insert(END,f1)
+                f1.close()
+                present="yes"
+
+        if present=="no":
+            messagebox.showerror("Error","Invalid Bill No.")        
+
+
+    def clear_data(self):
+
+        op=messagebox.askyesno("Clear","Do you really want to Clear All?")
+        if(op>0):
+        
+             self.soap.set(0)
+             self.face_cream.set(0)
+             self.face_wash.set(0)
+             self.spray.set(0)
+             self.gel.set(0)
+             self.lotion.set(0)
+
+             self.rice.set(0)
+             self.food_oil.set(0)
+             self.dal.set(0)
+             self.wheat.set(0)
+             self.sugar.set(0)
+             self.tea.set(0)
+
+
+             self.mazza.set(0)
+             self.coke.set(0)
+             self.frooti.set(0)
+             self.thumbsup.set(0)
+             self.limca.set(0)
+             self.sprite.set(0)
+
+
+             self.cosmetic_price.set("")
+             self.grocery_price.set("")
+             self.cold_drink_price.set("")
+
+             self.cosmetic_tax.set("")
+             self.grocery_tax.set("")
+             self.cold_drink_tax.set("")
+
+             self.c_name.set("")
+             self.c_phon.set("")
+      
+             self.bill_no.set("")
+             x=random.randint(2000,9999)
+
+             self.bill_no.set(str(x))
+
+             self.search_bill.set("")
+
+             self.welcome_bill()
+        
+
+    def Exit(self):
+        op=messagebox.askyesno("Exit","Do you really want to Exit?")
+        if(op>0):
+            self.root.destroy()
+
 
 
 root=Tk()

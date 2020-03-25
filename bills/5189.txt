@@ -1,0 +1,24 @@
+	WELCOME TO OUR RETAIL SHOP
+
+ BILL NUMBER 5189
+ CUSTOMER NAME Rahul
+ PHONE NUMBER 76784554**
+*************************************
+*************************************
+ PRODUCTS		 QTY 		 PRICE
+ BATH SOAP 		 1		 40
+ FACE WASH 		 2		 120
+ HAIR GEL 		 6		 840
+ BODY LOTION 		 2		 360
+Cosmetics Tax 		 Rs. 68.0
+ MAZZA 		 1		 60
+ COKE 		 2		 120
+ THUMBS UP 		 5		 225
+ SPRITE 		 4		 240
+Cold Drinks Tax 		 Rs. 22.25
+ DAL 		 2		 120
+ FOOD OIL 		 5		 900
+ SUGAR 		 6		 270
+ TEA 		 2		 300
+Groceries Tax 		 Rs. 159.0
+ TOTAL BILL: 		3644.25
