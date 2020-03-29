@@ -34,5 +34,5 @@ Then python bill.py in the terminal.
 ### Author 
 ```
 Rahul Kumar Patro
-
+```
 
